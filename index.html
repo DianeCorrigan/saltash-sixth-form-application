@@ -1385,17 +1385,6 @@ input[type="file"] {
             </div>
           </div>
 
-          <div class="field-row">
-            <div class="field">
-              <label for="ext_app_email">Applicant's personal email <span class="opt">(optional)</span></label>
-              <input type="email" id="ext_app_email" name="Applicant email" autocomplete="email">
-            </div>
-            <div class="field">
-              <label for="ext_app_mobile">Applicant's mobile <span class="opt">(optional)</span></label>
-              <input type="tel" id="ext_app_mobile" name="Applicant mobile" autocomplete="tel">
-            </div>
-          </div>
-
           <div class="field-row single">
             <div class="field">
               <label for="ext_family">Family links <span class="opt">(if any)</span></label>
@@ -1466,8 +1455,8 @@ input[type="file"] {
 
           <div class="sub-heading" style="margin-top:0">Emergency consent</div>
           <div class="field">
-            <p class="q-text" style="font-size:0.88rem;margin-bottom:10px">In an emergency, if we can't reach a contact, do you consent to the school seeking medical treatment for the applicant?</p>
-            <div class="yn" data-name="Medical emergency consent" data-req></div>
+            <!-- WORDING TO BE CONFIRMED BY SALTASH -->
+            <div class="ack" data-name="Medical emergency consent" data-req data-err="This consent is required to apply">In an emergency, if a contact can't be reached, I consent to the school seeking any medical treatment the applicant needs.</div>
           </div>
 
           <div class="sub-heading">GP surgery</div>
@@ -1557,6 +1546,10 @@ input[type="file"] {
           </div>
 
           <div class="sub-heading">Course choices</div>
+          <div class="info-box" style="margin-bottom:18px">
+            <span class="icon">ℹ️</span>
+            <span>These choices are an initial expression of interest. The courses that will be running are confirmed in March, when final decisions are made.</span>
+          </div>
           <div class="field-row">
             <div class="field">
               <label for="ext_opt1">Option 1 <span class="req">*</span></label>
@@ -1721,7 +1714,7 @@ input[type="file"] {
             <div class="yn" data-name="Copyright permission" data-req></div>
           </div>
           <div class="question field">
-            <p class="q-text"><strong>Internet access.</strong> Needed for much schoolwork and homework. Our <a href="https://www.smart-trust.net/attachments/download.asp?file=472&amp;type=pdf" target="_blank" rel="noopener">Acceptable Use Policy</a> applies.</p>
+            <p class="q-text"><strong>Internet access.</strong> Needed for much schoolwork and homework. Our <a data-link="aup">Acceptable Use Policy</a> applies.</p>
             <div class="yn" data-name="Internet access" data-req></div>
           </div>
           <div class="question field">
@@ -1729,21 +1722,21 @@ input[type="file"] {
             <div class="yn" data-name="Sex education" data-req></div>
           </div>
           <div class="question field">
-            <p class="q-text"><strong>Biometric catering.</strong> Register my child on the Academy's biometric cashless catering system.</p>
+            <p class="q-text"><strong>Biometric catering.</strong> Register my child on the Academy's biometric (fingerprint) cashless catering system. Please read the <a data-link="biometric">Biometric Data Policy</a> before answering.</p>
             <div class="yn" data-name="Biometric catering" data-req></div>
           </div>
           <div class="question field">
-            <div class="ack" data-name="Home School Agreement" data-req>I have read and agree to abide by the <a href="https://www.saltash.net/information/home-school-agreement" target="_blank" rel="noopener">Home School Agreement</a>.</div>
+            <div class="ack" data-name="Home School Agreement" data-req>I have read and agree to abide by the <a data-link="homeSchool">Home School Agreement</a>.</div>
           </div>
 
           <div class="sub-heading">Use of student images by the Academy and SMART</div>
           <div class="question field">
-            <p class="q-text">Please confirm that you agree to <strong>all</strong> of the following:</p>
-            <ul class="statement-list">
-              <li>Images of my child may be taken.</li>
-              <li>My child's first name and surname may be published online, with or without their image.</li>
-            </ul>
-            <div class="radio-group inline" data-options="Yes, I consent to all|No, I do not consent" data-name="Image consent" data-req></div>
+            <p class="q-text"><strong>Images.</strong> I consent to images of my child being taken and used by the Academy and SMART.</p>
+            <div class="yn" data-name="Consent: images" data-req></div>
+          </div>
+          <div class="question field">
+            <p class="q-text"><strong>Names.</strong> I consent to my child's first name and surname being published online, with or without their image.</p>
+            <div class="yn" data-name="Consent: name published" data-req></div>
           </div>
 
           <div class="sub-heading">School trips and off-site activities</div>
@@ -1777,10 +1770,10 @@ input[type="file"] {
 
           <div class="sub-heading">Student Acceptable Use Policy</div>
           <div class="question field">
-            <div class="ack" data-name="AUP: parent consent" data-req>As parent or carer, I agree to my child following the Student Acceptable Use Policy.</div>
+            <div class="ack" data-name="AUP: parent consent" data-req>As parent or carer, I agree to my child following the <a data-link="studentAup">Student Acceptable Use Policy</a>.</div>
           </div>
           <div class="question field">
-            <div class="ack" data-name="AUP: student agreement" data-req>As the student, I agree to follow the Student Acceptable Use Policy.</div>
+            <div class="ack" data-name="AUP: student agreement" data-req>As the student, I agree to follow the <a data-link="studentAup">Student Acceptable Use Policy</a>.</div>
           </div>
         </div>
       </div>
@@ -1892,6 +1885,16 @@ const FORMS = {
 
 const MAX_FILE_MB = 5;
 
+// Policy links used on the external form. Paste each full web address
+// between the quote marks. A link left empty shows as plain text
+// (not clickable) so applicants never land on a broken page.
+const LINKS = {
+  aup:        'https://www.smart-trust.net/attachments/download.asp?file=452&type=pdf',  // Acceptable Use Policy (internet access question)
+  studentAup: 'https://www.smart-trust.net/attachments/download.asp?file=452&type=pdf',  // Student Acceptable Use Policy (parent and student agreements)
+  homeSchool: 'https://www.saltash.net/information/home-school-agreement',              // Home School Agreement
+  biometric:  'https://www.smart-trust.net/attachments/download.asp?file=502&type=pdf'   // Biometric Data Policy on the SMART website
+};
+
 /* ═══════════════════════════════════════════════════════════
    BUILD REPEATED MARKUP
 ═══════════════════════════════════════════════════════════ */
@@ -1921,6 +1924,7 @@ function buildAcks() {
     const label = document.createElement('label');
     label.className = 'check-item';
     if (el.hasAttribute('data-req')) label.setAttribute('data-req', '');
+    if (el.dataset.err) label.dataset.err = el.dataset.err;
     label.innerHTML = `<input type="checkbox" name="${esc(el.dataset.name)}" value="Agreed"><span class="check-box"></span><span class="check-label">${el.innerHTML}</span>`;
     el.replaceWith(label);
   });
@@ -2050,6 +2054,22 @@ function updateAddContactBtn() {
   const btn = document.getElementById('addContactBtn');
   btn.hidden = n >= 4;
   btn.querySelector('span').textContent = n === 2 ? 'Add a third contact' : 'Add a fourth contact';
+}
+
+function wireLinks() {
+  document.querySelectorAll('a[data-link]').forEach(a => {
+    const url = (LINKS[a.dataset.link] || '').trim();
+    if (url) {
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+    } else {
+      const span = document.createElement('strong');
+      span.textContent = a.textContent;
+      a.replaceWith(span);
+      console.warn('Policy link not set yet:', a.dataset.link);
+    }
+  });
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2490,6 +2510,7 @@ buildYesNo();
 buildAcks();
 buildCourses();
 buildContacts();
+wireLinks();
 document.querySelectorAll('.app-form').forEach(wireForm);
 document.querySelectorAll('.app-form').forEach(wireCourseSlots);
 wireRanking();
